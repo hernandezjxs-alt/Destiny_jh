@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destiny 2 Vanguard & Crucible Audit</title>
+  <style>
+    :root {
+      --bg-dark: #0a0d14;
+      --card-bg: rgba(16, 22, 34, 0.9);
+      --accent-gold: #e5b158;
+      --accent-blue: #00f0ff;
+      --accent-red: #ff3366;
+      --accent-green: #00ff88;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border-color: rgba(229, 177, 88, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text-main); padding: 15px; line-height: 1.4; }
+    header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+    h1 { color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; font-size: 1.4rem; }
+    .subtitle { color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; }
+    nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+    .nav-btn { background: transparent; border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: all 0.2s; }
+    .nav-btn.active, .nav-btn:hover { background: var(--accent-gold); color: var(--bg-dark); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .grid-players { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
+    .player-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; }
+    .player-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px; }
+    .player-name { font-weight: bold; color: var(--accent-blue); font-size: 1rem; }
+    .badge-denuncias { padding: 2px 6px; border-radius: 10px; font-size: 0.7rem; font-weight: bold; }
+    .denuncias-0 { background: rgba(0,255,136,0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .denuncias-alert { background: rgba(255,51,102,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .kpi-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; }
+    .kpi-val { font-weight: bold; color: var(--accent-gold); }
+    .weapons-list, .armor-optimizer { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 15px; margin-top: 15px; }
+    .section-title { color: var(--accent-gold); margin-bottom: 12px; text-transform: uppercase; font-size: 1rem; border-left: 3px solid var(--accent-gold); padding-left: 8px; }
+    .weapon-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+    .weapon-name { font-weight: bold; }
+    .weapon-drop { font-size: 0.75rem; color: var(--text-muted); }
+    .stat-slider { margin-bottom: 12px; }
+    .stat-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.8rem; }
+    input[type=range] { width: 100%; accent-color: var(--accent-blue); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Destiny 2 Vanguard & Crucible</h1>
+    <p class="subtitle">API: D1b2d1838e164201a13b13533005b142 (PSN)</p>
+  </header>
+
+  <nav>
+    <button class="nav-btn active" onclick="switchTab('tab-auditoria')">Jugadores & Armas</button>
+    <button class="nav-btn" onclick="switchTab('tab-armadura')">Optimizador Armadura</button>
+  </nav>
+
+  <!-- TAB AUDITORÍA -->
+  <div id="tab-auditoria" class="tab-content active">
+    <div class="grid-players">
+      <div class="player-card">
+        <div class="player-header">
+          <span class="player-name">Hernandez#2564</span>
+          <span class="badge-denuncias denuncias-0">0 Denuncias</span>
+        </div>
+        <div class="kpi-row"><span>K/D Crisol:</span><span class="kpi-val">1.85</span></div>
+        <div class="kpi-row"><span>Victorias:</span><span class="kpi-val">64%</span></div>
+        <div class="kpi-row"><span>Precisión HS:</span><span class="kpi-val">68%</span></div>
+        <div class="kpi-row"><span>Horas:</span><span class="kpi-val">1,420 hrs</span></div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-header">
+          <span class="player-name">iMega_z#0558</span>
+          <span class="badge-denuncias denuncias-0">0 Denuncias</span>
+        </div>
+        <div class="kpi-row"><span>K/D Crisol:</span><span class="kpi-val">2.10</span></div>
+        <div class="kpi-row"><span>Victorias:</span><span class="kpi-val">71%</span></div>
+        <div class="kpi-row"><span>Precisión HS:</span><span class="kpi-val">74%</span></div>
+        <div class="kpi-row"><span>Horas:</span><span class="kpi-val">2,150 hrs</span></div>
+      </div>
+
+      <div class="player-card">
+        <div class="player-header">
+          <span class="player-name">Zanki.#2981</span>
+          <span class="badge-denuncias denuncias-alert">1 Denuncia</span>
+        </div>
+        <div class="kpi-row"><span>K/D Crisol:</span><span class="kpi-val">1.45</span></div>
+        <div class="kpi-row"><span>Victorias:</span><span class="kpi-val">52%</span></div>
+        <div class="kpi-row"><span>Precisión HS:</span><span class="kpi-val">58%</span></div>
+        <div class="kpi-row"><span>Horas:</span><span class="kpi-val">890 hrs</span></div>
+      </div>
+    </div>
+
+    <div class="weapons-list">
+      <h3 class="section-title">Armas más Usadas & Obtención</h3>
+      <div class="weapon-item">
+        <div>
+          <div class="weapon-name">As de Picas</div>
+          <div class="weapon-drop">Obtención: Monumento a las Luces Perdidas</div>
+        </div>
+        <span class="kpi-val">14,250 b.</span>
+      </div>
+      <div class="weapon-item">
+        <div>
+          <div class="weapon-name">Matador 64</div>
+          <div class="weapon-drop">Obtención: Mazmorra Garras de la Avaricia</div>
+        </div>
+        <span class="kpi-val">8,910 b.</span>
+      </div>
+      <div class="weapon-item">
+        <div>
+          <div class="weapon-name">Inquisidor</div>
+          <div class="weapon-drop">Obtención: Pruebas de Osiris</div>
+        </div>
+        <span class="kpi-val">6,430 b.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB OPTIMIZADOR ARMADURA -->
+  <div id="tab-armadura" class="tab-content">
+    <div class="armor-optimizer">
+      <h3 class="section-title">Optimizador Tiers (D2ArmorPicker)</h3>
+      <p style="font-size:0.8rem; color: var(--text-muted); margin-bottom: 15px;">Fija los objetivos de atributos para el cálculo de piezas.</p>
+      
+      <div class="stat-slider">
+        <div class="stat-header"><span>Movilidad</span><span id="val-mov">T10 (100)</span></div>
+        <input type="range" min="0" max="100" step="10" value="100" oninput="document.getElementById('val-mov').innerText = 'T' + (this.value/10) + ' (' + this.value + ')'">
+      </div>
+
+      <div class="stat-slider">
+        <div class="stat-header"><span>Resiliencia</span><span id="val-res">T10 (100)</span></div>
+        <input type="range" min="0" max="100" step="10" value="100" oninput="document.getElementById('val-res').innerText = 'T' + (this.value/10) + ' (' + this.value + ')'">
+      </div>
+
+      <div class="stat-slider">
+        <div class="stat-header"><span>Recuperación</span><span id="val-rec">T10 (100)</span></div>
+        <input type="range" min="0" max="100" step="10" value="100" oninput="document.getElementById('val-rec').innerText = 'T' + (this.value/10) + ' (' + this.value + ')'">
+      </div>
+
+      <div style="margin-top: 15px; padding: 10px; background: rgba(0,240,255,0.05); border: 1px solid var(--accent-blue); border-radius: 4px;">
+        <h4 style="color: var(--accent-blue); font-size: 0.9rem; margin-bottom: 3px;">Triple 100 Configurado</h4>
+        <p style="font-size: 0.75rem;">Requiere 4 piezas Artífice y Obra Maestra completa.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
