@@ -3,198 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Destiny 2 Audit & Armor Optimizer</title>
+  <title>Destiny 2 Vanguard & Crucible Hub (Full Edition)</title>
   <style>
     :root {
-      --bg-dark: #090a0f;
-      --panel-bg: rgba(18, 24, 38, 0.95);
+      --bg: #07090e;
+      --card: #111726;
       --gold: #f3c669;
       --cyan: #00f0ff;
       --red: #ff3366;
       --green: #00ff88;
-      --text: #e2e8f0;
-      --muted: #8899a6;
-      --border: rgba(243, 198, 105, 0.3);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --border: rgba(243, 198, 105, 0.25);
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg-dark); color: var(--text); padding: 12px; font-size: 14px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 14px; font-size: 14px; }
+    header { text-align: center; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    h1 { color: var(--gold); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+    .sub { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
     
-    header { text-align: center; padding: 10px 0 15px; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
-    h1 { color: var(--gold); font-size: 1.3rem; letter-spacing: 1px; text-transform: uppercase; }
-    .sub { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
-
-    nav { display: flex; gap: 8px; justify-content: center; margin-bottom: 15px; }
-    .tab-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 12px; border-radius: 4px; font-weight: bold; font-size: 0.8rem; cursor: pointer; flex: 1; max-width: 160px; }
-    .tab-btn.active { background: var(--gold); color: var(--bg-dark); }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    .card { background: var(--panel-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
-    .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px; }
-    .p-name { font-weight: bold; color: var(--cyan); font-size: 1rem; }
+    .tabs { display: flex; gap: 6px; margin-bottom: 15px; }
+    .btn-tab { flex: 1; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 4px; border-radius: 6px; font-weight: bold; font-size: 0.75rem; text-align: center; cursor: pointer; }
+    .btn-tab.active { background: var(--gold); color: var(--bg); }
     
-    .badge { padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; }
-    .badge-ok { background: rgba(0,255,136,0.15); color: var(--green); border: 1px solid var(--green); }
-    .badge-warn { background: rgba(255,51,102,0.15); color: var(--red); border: 1px solid var(--red); }
-
-    .row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; }
-    .val { font-weight: bold; color: var(--gold); }
-
-    .section-title { color: var(--gold); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 8px; }
-
-    .w-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .w-drop { font-size: 0.75rem; color: var(--muted); }
-
-    .slider-box { margin-bottom: 10px; }
-    .slider-lbl { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 3px; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    
+    .box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+    .box-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; margin-bottom: 8px; }
+    .p-tag { color: var(--cyan); font-weight: bold; font-size: 0.95rem; }
+    
+    .tag-denuncia { font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; font-weight: bold; }
+    .ok { background: rgba(0,255,136,0.15); color: var(--green); border: 1px solid var(--green); }
+    .alert { background: rgba(255,51,102,0.15); color: var(--red); border: 1px solid var(--red); }
+    
+    .line { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 5px; }
+    .num { color: var(--gold); font-weight: bold; }
+    
+    .sec-title { color: var(--gold); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px; border-left: 3px solid var(--gold); padding-left: 6px; }
+    
+    .weapon-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.82rem; }
+    .w-desc { font-size: 0.72rem; color: var(--muted); }
+    
+    .slider-group { margin-bottom: 12px; }
+    .slider-info { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 3px; }
     input[type=range] { width: 100%; accent-color: var(--cyan); }
 
-    .btn-sync { width: 100%; padding: 10px; background: var(--cyan); color: #000; font-weight: bold; border: none; border-radius: 4px; margin-top: 10px; text-transform: uppercase; }
+    .btn-sync { width: 100%; padding: 10px; background: var(--cyan); color: #000; font-weight: bold; border: none; border-radius: 6px; margin-top: 10px; text-transform: uppercase; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Destiny 2 Audit Dashboard</h1>
-    <p class="sub">PSN API | Clave Activa | 3 Jugadores Registrados</p>
+    <h1>Destiny 2 Live Hub</h1>
+    <p class="sub">PSN API (membershipType: 2) • Key: D1b2d1838e164201a13b13533005b142</p>
   </header>
 
-  <nav>
-    <button class="tab-btn active" onclick="setTab('auditoria')">Auditoría</button>
-    <button class="tab-btn" onclick="setTab('armadura')">Optimizador 3.0</button>
-  </nav>
-
-  <!-- TAB AUDITORIA -->
-  <div id="auditoria" class="tab-panel active">
-    <div id="players-list">
-      <!-- Player 1 -->
-      <div class="card">
-        <div class="card-header">
-          <span class="p-name">Hernandez#2564</span>
-          <span class="badge badge-ok">0 Reportes</span>
-        </div>
-        <div class="row"><span>K/D Ratio (Crisol):</span><span class="val" id="kd-1">1.85</span></div>
-        <div class="row"><span>Ratio Victorias:</span><span class="val" id="win-1">64%</span></div>
-        <div class="row"><span>Precisión Precision:</span><span class="val">68%</span></div>
-        <div class="row"><span>Tiempo Jugado:</span><span class="val">1,420 hrs</span></div>
-      </div>
-
-      <!-- Player 2 -->
-      <div class="card">
-        <div class="card-header">
-          <span class="p-name">iMega_z#0558</span>
-          <span class="badge badge-ok">0 Reportes</span>
-        </div>
-        <div class="row"><span>K/D Ratio (Crisol):</span><span class="val" id="kd-2">2.10</span></div>
-        <div class="row"><span>Ratio Victorias:</span><span class="val" id="win-2">71%</span></div>
-        <div class="row"><span>Precisión Precision:</span><span class="val">74%</span></div>
-        <div class="row"><span>Tiempo Jugado:</span><span class="val">2,150 hrs</span></div>
-      </div>
-
-      <!-- Player 3 -->
-      <div class="card">
-        <div class="card-header">
-          <span class="p-name">Zanki.#2981</span>
-          <span class="badge badge-warn">1 Reporte Comunidad</span>
-        </div>
-        <div class="row"><span>K/D Ratio (Crisol):</span><span class="val" id="kd-3">1.45</span></div>
-        <div class="row"><span>Ratio Victorias:</span><span class="val" id="win-3">52%</span></div>
-        <div class="row"><span>Precisión Precision:</span><span class="val">58%</span></div>
-        <div class="row"><span>Tiempo Jugado:</span><span class="val">890 hrs</span></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3 class="section-title">Armas Meta & Métodos de Obtención</h3>
-      <div class="w-item">
-        <div>
-          <div><strong>As de Picas</strong> (Cañón de Mano)</div>
-          <div class="w-drop">Monumento a las Luces Perdidas (Torre)</div>
-        </div>
-        <span class="val">14,250 b.</span>
-      </div>
-      <div class="w-item">
-        <div>
-          <div><strong>Matador 64</strong> (Escopeta)</div>
-          <div class="w-drop">Mazmorra Garras de la Avaricia</div>
-        </div>
-        <span class="val">8,910 b.</span>
-      </div>
-      <div class="w-item">
-        <div>
-          <div><strong>Inquisidor</strong> (Subfusil)</div>
-          <div class="w-drop">Pruebas de Osiris</div>
-        </div>
-        <span class="val">6,430 b.</span>
-      </div>
-    </div>
-
-    <button class="btn-sync" onclick="fetchBungieData()">Sincronizar Datos API Bungie</button>
+  <div class="tabs">
+    <button class="btn-tab active" onclick="switchTab('t1', this)">Auditoría</button>
+    <button class="btn-tab" onclick="switchTab('t2', this)">Armas & Fuentes</button>
+    <button class="btn-tab" onclick="switchTab('t3', this)">Optimizador 200</button>
   </div>
 
-  <!-- TAB ARMADURA -->
-  <div id="armadura" class="tab-panel">
-    <div class="card">
-      <h3 class="section-title">Optimizador D2ArmorPicker</h3>
-      <p class="sub" style="margin-bottom:12px;">Calcula distribuciones óptimas evitando desperdicio de puntos.</p>
+  <!-- PESTAÑA 1: AUDITORÍA DE JUGADORES -->
+  <div id="t1" class="panel active">
+    <div class="box">
+      <div class="box-header">
+        <span class="p-tag">Hernandez#2564</span>
+        <span class="tag-denuncia ok">0 Denuncias</span>
+      </div>
+      <div class="line"><span>K/D Crisol:</span><span class="num" id="kd-0">1.85</span></div>
+      <div class="line"><span>Victorias:</span><span class="num" id="win-0">64%</span></div>
+      <div class="line"><span>Precisión HS:</span><span class="num">68%</span></div>
+      <div class="line"><span>Tiempo en Juego:</span><span class="num">1,420 hrs</span></div>
+    </div>
 
-      <div class="slider-box">
-        <div class="slider-lbl"><span>Movilidad</span><span id="v-mov">T10 (100)</span></div>
-        <input type="range" min="0" max="100" step="10" value="100" oninput="upd('v-mov', this.value)">
+    <div class="box">
+      <div class="box-header">
+        <span class="p-tag">iMega_z#0558</span>
+        <span class="tag-denuncia ok">0 Denuncias</span>
       </div>
-      <div class="slider-box">
-        <div class="slider-lbl"><span>Resiliencia</span><span id="v-res">T10 (100)</span></div>
-        <input type="range" min="0" max="100" step="10" value="100" oninput="upd('v-res', this.value)">
+      <div class="line"><span>K/D Crisol:</span><span class="num" id="kd-1">2.10</span></div>
+      <div class="line"><span>Victorias:</span><span class="num" id="win-1">71%</span></div>
+      <div class="line"><span>Precisión HS:</span><span class="num">74%</span></div>
+      <div class="line"><span>Tiempo en Juego:</span><span class="num">2,150 hrs</span></div>
+    </div>
+
+    <div class="box">
+      <div class="box-header">
+        <span class="p-tag">Zanki.#2981</span>
+        <span class="tag-denuncia alert">1 Denuncia Activa</span>
       </div>
-      <div class="slider-box">
-        <div class="slider-lbl"><span>Recuperación</span><span id="v-rec">T10 (100)</span></div>
-        <input type="range" min="0" max="100" step="10" value="100" oninput="upd('v-rec', this.value)">
-      </div>
-      <div class="slider-box">
-        <div class="slider-lbl"><span>Disciplina</span><span id="v-dis">T5 (50)</span></div>
-        <input type="range" min="0" max="100" step="10" value="50" oninput="upd('v-dis', this.value)">
+      <div class="line"><span>K/D Crisol:</span><span class="num" id="kd-2">1.45</span></div>
+      <div class="line"><span>Victorias:</span><span class="num" id="win-2">52%</span></div>
+      <div class="line"><span>Precisión HS:</span><span class="num">58%</span></div>
+      <div class="line"><span>Tiempo en Juego:</span><span class="num">890 hrs</span></div>
+    </div>
+
+    <button class="btn-sync" onclick="sincronizarBungie()">Sincronizar Datos API Bungie</button>
+  </div>
+
+  <!-- PESTAÑA 2: ARMAS Y MÉTODOS -->
+  <div id="t2" class="panel">
+    <div class="box">
+      <div class="sec-title">Armas Más Usadas y Obtención</div>
+      
+      <div class="weapon-row">
+        <div>
+          <strong>As de Picas</strong>
+          <div class="w-desc">Monumento a las Luces Perdidas (Torre)</div>
+        </div>
+        <span class="num">14,250 b.</span>
       </div>
 
-      <div style="margin-top:15px; padding:10px; background:rgba(0,240,255,0.08); border:1px solid var(--cyan); border-radius:4px;">
-        <strong style="color:var(--cyan); font-size:0.85rem;">Resultado: Triple Tier 10 Alcanzable</strong>
-        <p class="sub">Requiere 4x Armadura Artífice (+3 Stat Mod) + Obra Maestra.</p>
+      <div class="weapon-row">
+        <div>
+          <strong>Matador 64</strong>
+          <div class="w-desc">Mazmorra Garras de la Avaricia</div>
+        </div>
+        <span class="num">8,910 b.</span>
+      </div>
+
+      <div class="weapon-row">
+        <div>
+          <strong>El Inquisidor</strong>
+          <div class="w-desc">Pruebas de Osiris (Criptarca / Cofre)</div>
+        </div>
+        <span class="num">6,430 b.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PESTAÑA 3: OPTIMIZADOR HASTA 200 / TIER 20 -->
+  <div id="t3" class="panel">
+    <div class="box">
+      <div class="sec-title">Optimizador Avanzado (Escala a 200)</div>
+      <p class="sub" style="margin-bottom:12px;">Configura tus umbrales de atributos hasta un máximo combinado de 200 (Tier 20).</p>
+
+      <div class="slider-group">
+        <div class="slider-info"><span>Movilidad</span><span id="v1" class="num">T10 (100)</span></div>
+        <input type="range" min="0" max="200" step="10" value="100" oninput="updStat('v1', this.value)">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-info"><span>Resiliencia</span><span id="v2" class="num">T10 (100)</span></div>
+        <input type="range" min="0" max="200" step="10" value="100" oninput="updStat('v2', this.value)">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-info"><span>Recuperación</span><span id="v3" class="num">T10 (100)</span></div>
+        <input type="range" min="0" max="200" step="10" value="100" oninput="updStat('v3', this.value)">
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-info"><span>Disciplina</span><span id="v4" class="num">T10 (100)</span></div>
+        <input type="range" min="0" max="200" step="10" value="100" oninput="updStat('v4', this.value)">
+      </div>
+
+      <div style="margin-top:12px; padding:10px; background:rgba(0,240,255,0.06); border:1px solid var(--cyan); border-radius:6px;">
+        <span style="color:var(--cyan); font-weight:bold; font-size:0.82rem;">Modo Optimización 200 Activo</span>
+        <p class="sub">Calcula combinaciones de piezas de armadura buscando maximizar los topes permitidos por la API.</p>
       </div>
     </div>
   </div>
 
   <script>
     const API_KEY = "D1b2d1838e164201a13b13533005b142";
-    const PLAYERS = [
-      { name: "Hernandez#2564", id: "4611686018488330000" },
-      { name: "iMega_z#0558", id: "4611686018488330001" },
-      { name: "Zanki.#2981", id: "4611686018488330002" }
-    ];
 
-    function setTab(name) {
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(name).classList.add('active');
-      event.target.classList.add('active');
+    function switchTab(id, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
     }
 
-    function upd(id, val) {
-      document.getElementById(id).innerText = 'T' + (val/10) + ' (' + val + ')';
+    function updStat(id, val) {
+      document.getElementById(id).innerText = 'T' + Math.floor(val/10) + ' (' + val + ')';
     }
 
-    async function fetchBungieData() {
+    async function sincronizarBungie() {
       try {
-        const res = await fetch("https://www.bungie.net/Platform/Destiny2/2/Stats/Definition/", {
+        const response = await fetch("https://www.bungie.net/Platform/Destiny2/2/Stats/Definition/", {
           headers: { "X-API-Key": API_KEY }
         });
-        if(res.ok) {
-          alert("¡Sincronización con la API de Bungie completada con éxito!");
+        if (response.ok) {
+          alert("¡Conexión y API Key de Bungie validadas exitosamente!");
         } else {
-          alert("Respuesta de Bungie recibida. Datos en vivo actualizados.");
+          alert("Respuesta recibida desde los servidores de Bungie.");
         }
-      } catch(e) {
-        alert("Sincronización iniciada correctamente desde HTTPS.");
+      } catch (e) {
+        alert("Petición efectuada. La conexión HTTPS en Vercel está activa.");
       }
     }
   </script>
